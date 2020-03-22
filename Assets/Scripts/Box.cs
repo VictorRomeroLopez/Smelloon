@@ -16,27 +16,42 @@ public class Box : MonoBehaviour
 
     private void OnValidate()
     {
-        Color setColor;
+        Color setColor = new Color();
 
-        switch (_boxType)
+        try
         {
-            case BoxManager.BoxType.CHEESE:
-                setColor = GetComponentInParent<BoxManager>().CheeseColor;
-                break;
-            case BoxManager.BoxType.MEAT:
-                setColor = GetComponentInParent<BoxManager>().MeatColor;
-                break;
-            case BoxManager.BoxType.FISH:
-                setColor = GetComponentInParent<BoxManager>().FishColor;
-                break;
-            case BoxManager.BoxType.GARLIC:
-                setColor = GetComponentInParent<BoxManager>().GarlicColor;
-                break;
-            default:
-                setColor = GetComponentInParent<BoxManager>().CheeseColor;
-                break;
+            switch (_boxType)
+            {
+                case BoxManager.BoxType.MEAT:
+                    setColor = GetComponentInParent<BoxManager>().MeatColor;
+                    break;
+                case BoxManager.BoxType.CHEESE:
+                    setColor = GetComponentInParent<BoxManager>().CheeseColor;
+                    break;
+                case BoxManager.BoxType.FISH:
+                    setColor = GetComponentInParent<BoxManager>().FishColor;
+                    break;
+                case BoxManager.BoxType.GARLIC:
+                    setColor = GetComponentInParent<BoxManager>().GarlicColor;
+                    break;
+                default:
+                    setColor = GetComponentInParent<BoxManager>().CheeseColor;
+                    break;
+            }
+        }
+        catch
+        {
+
         }
 
         GetComponent<SpriteRenderer>().color = setColor;
+    }
+
+    public BoxManager.BoxType PickupBox()
+    {
+        GetComponentInParent<BoxManager>().RemoveBox(this);
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<BoxCollider2D>().enabled = false;
+        return _boxType;
     }
 }

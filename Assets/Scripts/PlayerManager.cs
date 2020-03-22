@@ -41,8 +41,6 @@ public class PlayerManager : MonoBehaviour
         {
             rB.velocity = Vector2.zero;
         }
-
-        Debug.Log(rB.velocity);
     }
 
 }

@@ -43,14 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de718a1d3ef17ea48bd28222d9ef0760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boxes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _colorRegular: {r: 0.8396226, g: 0.6754814, b: 0.25743148, a: 1}
-  _colorCheese: {r: 0.86408055, g: 0.8679245, b: 0.3479886, a: 1}
+  _boxes: []
+  _colorRegular: {r: 1, g: 1, b: 1, a: 1}
+  _colorCheese: {r: 0.9827944, g: 1, b: 0, a: 1}
   _colorMeat: {r: 1, g: 0, b: 0, a: 1}
   _colorFish: {r: 0.2683339, g: 0.8490566, b: 0.83182174, a: 1}
-  _colorGarlic: {r: 1, g: 1, b: 1, a: 1}
+  _colorGarlic: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
