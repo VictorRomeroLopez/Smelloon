@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<GameObject> stars;
     [SerializeField] private Text ingredientText;
     [SerializeField] private Text timeText;
+    [SerializeField] private Text ingredientCounterText;
     [SerializeField] private PlayerManager _playerManager;
 
     private int currentIngredientsPicked = 0;
@@ -31,12 +32,12 @@ public class LevelManager : MonoBehaviour
 
         timer = maxTime;
 
-        StartCoroutine(LevelTimer());
+        ingredientCounterText.text = "Ingredients Left: " + minIngredientsAsked;
     }
 
     void Update()
     {
-        UpdateTimeText();
+        UpdateTime();
     }
 
     public void IngredientPicked(bool specialFound = false)
@@ -62,6 +63,8 @@ public class LevelManager : MonoBehaviour
         {
             specialPicked = true;
         }
+
+        ingredientCounterText.text = "Ingredients Left: " + (((minIngredientsAsked - currentIngredientsPicked) <0) ? 0 : (minIngredientsAsked - currentIngredientsPicked));
     }
 
     private void NewIngredientAsked()
@@ -87,10 +90,14 @@ public class LevelManager : MonoBehaviour
         if (specialPicked) stars[2].SetActive(true);
     }
 
-    private void UpdateTimeText()
+    private void UpdateTime()
     {
         timer -= Time.deltaTime;
-        if (timer < 0) timer = 0;
+        if (timer < 0)
+        {
+            timer = 0;
+            LevelEnded();
+        }
 
         timeText.text = "Time Left: "+ (int)timer;
     }
@@ -105,7 +112,6 @@ public class LevelManager : MonoBehaviour
     {
         NewIngredientAsked();
         timer = maxTime;
-        StartCoroutine(LevelTimer());
 
         ingredientsAskedCompleted = false;
         specialPicked = false;
