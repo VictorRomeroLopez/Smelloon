@@ -13,12 +13,19 @@ public class BoxGraber : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             int iterator = GetClosestBox(out float distance);
+            bool specialPicked = false;
 
-            if (distance < 1.3f && iterator != -1 && _lM.nextIngredient == _boxManager.Boxes[iterator].Type)
+            if (distance < 1.3f && iterator != -1 && (_lM.nextIngredient == _boxManager.Boxes[iterator].Type || _boxManager.Boxes[iterator].Type == BoxManager.BoxType.SPECIAL))
             {                
-                _grabedBoxes.Add(_boxManager.Boxes[iterator].PickupBox());
+                if (_boxManager.Boxes[iterator].Type == BoxManager.BoxType.SPECIAL)
+                    specialPicked = true;
 
-                _lM.IngredientPicked();
+                 _grabedBoxes.Add(_boxManager.Boxes[iterator].PickupBox());
+
+                if(specialPicked)
+                    _lM.IngredientPicked(true);
+                else
+                    _lM.IngredientPicked(false);
             }
         }
     }

@@ -40,17 +40,14 @@ public class LevelManager : MonoBehaviour
         UpdateTimeText();
     }
 
-    public void IngredientPicked()
+    public void IngredientPicked(bool specialFound = false)
     {
         currentIngredientsPicked++;
         if(minIngredientsAsked == currentIngredientsPicked)
         {
             ingredientsAskedCompleted = true;
         }
-
-        if (nextIngredient == BoxManager.BoxType.SPECIAL)
-            specialPicked = true;
-
+        
         for(int i=0; i<ingredientList.Count;i++)
         {
             if (ingredientList[i] == nextIngredient)
@@ -60,7 +57,12 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        NewIngredientAsked();
+        if(!specialFound)
+            NewIngredientAsked();
+        else
+        {
+            specialPicked = true;
+        }
     }
 
     private void NewIngredientAsked()

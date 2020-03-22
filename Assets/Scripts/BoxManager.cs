@@ -13,6 +13,7 @@ public class BoxManager : MonoBehaviour
     [SerializeField] private Color _colorMeat = new Color();
     [SerializeField] private Color _colorFish = new Color();
     [SerializeField] private Color _colorGarlic = new Color();
+    [SerializeField] private Color _colorSpecial = new Color();
 
     public List<Box> Boxes => _boxes;
     public Color RegularColor => _colorRegular;
@@ -20,6 +21,7 @@ public class BoxManager : MonoBehaviour
     public Color MeatColor => _colorMeat;
     public Color FishColor => _colorFish;
     public Color GarlicColor => _colorGarlic;
+    public Color SpecialColor => _colorSpecial;
 
     public void RemoveBox(Box _boxToRemove)
     {

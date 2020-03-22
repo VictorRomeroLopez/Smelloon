@@ -34,6 +34,9 @@ public class Box : MonoBehaviour
                 case BoxManager.BoxType.GARLIC:
                     setColor = GetComponentInParent<BoxManager>().GarlicColor;
                     break;
+                case BoxManager.BoxType.SPECIAL:
+                    setColor = GetComponentInParent<BoxManager>().SpecialColor;
+                    break;
                 default:
                     setColor = GetComponentInParent<BoxManager>().CheeseColor;
                     break;
