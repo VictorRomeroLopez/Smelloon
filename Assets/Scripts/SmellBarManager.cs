@@ -9,6 +9,9 @@ public class SmellBarManager : MonoBehaviour
     [SerializeField] private int _maxSize;
     [SerializeField, Range(0,1)] private float[] _barManagerSize = new float[0];
 
+    public BarManager[] Bar => _barManagers;
+    public float[] BarManagerSize => _barManagerSize;
+
     private void OnValidate()
     {
         if (_barManagers.Length != transform.childCount) {
