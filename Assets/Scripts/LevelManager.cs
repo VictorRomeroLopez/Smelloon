@@ -5,29 +5,39 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
-
+    [SerializeField] List<BoxManager.BoxType> ingredientList;
     [SerializeField] private int minIngredientsAsked = 0;
     [SerializeField] private float maxTime = 0;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private List<GameObject> stars;  
+    [SerializeField] private List<GameObject> stars;
+    [SerializeField] private Text ingredientText;
+    [SerializeField] private Text timeText;
     private int currentIngredientsPicked = 0;
+
+    public BoxManager.BoxType nextIngredient;
 
     private bool ingredientsAskedCompleted = false;
     private bool specialPicked = false;
     private bool scaped = false;
     private bool levelEnded = false;
+    private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale= 1;
+
+        NewIngredientAsked();
+
+        timer = maxTime;
+
         StartCoroutine(LevelTimer());
-        SpecialIngredientPicked();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateTimeText();
     }
 
     public void IngredientPicked()
@@ -37,16 +47,34 @@ public class LevelManager : MonoBehaviour
         {
             ingredientsAskedCompleted = true;
         }
+
+        if (nextIngredient == BoxManager.BoxType.SPECIAL)
+            specialPicked = true;
+
+        for(int i=0; i<ingredientList.Count;i++)
+        {
+            if (ingredientList[i] == nextIngredient)
+            {
+                ingredientList.RemoveAt(i);
+                break;
+            }
+        }
+
+        NewIngredientAsked();
     }
 
-    public void SpecialIngredientPicked()
+    private void NewIngredientAsked()
     {
-        specialPicked = true;
+        nextIngredient = ingredientList[(int)Random.Range(0, ingredientList.Count - 0.1f)];
+        ingredientText.text = "Ingredient Asked: " + nextIngredient;
     }
-
+    
     public void ScapedAtTime()
     {
-        scaped = true;
+        if(ingredientsAskedCompleted)
+            scaped = true;
+
+        LevelEnded();
     }
 
     public void LevelEnded()
@@ -56,6 +84,14 @@ public class LevelManager : MonoBehaviour
         if (scaped) stars[0].SetActive(true);
         if (ingredientsAskedCompleted) stars[1].SetActive(true);
         if (specialPicked) stars[2].SetActive(true);
+    }
+
+    private void UpdateTimeText()
+    {
+        timer -= Time.deltaTime;
+        if (timer < 0) timer = 0;
+
+        timeText.text = "Time Left: "+ (int)timer;
     }
 
     IEnumerator LevelTimer()

@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     Rigidbody2D rB;
     private float speed = 5;
+    [SerializeField] LevelManager lM;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,15 @@ public class PlayerManager : MonoBehaviour
         else
         {
             rB.velocity = Vector2.zero;
+        }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Door"))
+        {
+            lM.ScapedAtTime();
         }
     }
 

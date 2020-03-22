@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoxManager : MonoBehaviour
 {
-    public enum BoxType { CHEESE, FISH, MEAT, GARLIC }
+    public enum BoxType { CHEESE, FISH, MEAT, GARLIC, SPECIAL }
 
     [SerializeField] private List<Box> _boxes;
 
@@ -33,5 +33,5 @@ public class BoxManager : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
             _boxes.Add(transform.GetChild(i).GetComponent<Box>());
     }
-
+    
 }
