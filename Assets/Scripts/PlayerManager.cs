@@ -4,19 +4,16 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] LevelManager lM;
+
     Rigidbody2D rB;
     private float speed = 5;
-    [SerializeField] LevelManager lM;
-    // Start is called before the first frame update
+    private Vector2 _startPosition;
+
     void Start()
     {
+        _startPosition = transform.position;
         rB = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -44,6 +41,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void OnReset()
+    {
+        transform.position = _startPosition;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

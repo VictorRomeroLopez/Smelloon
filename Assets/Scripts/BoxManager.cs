@@ -28,6 +28,19 @@ public class BoxManager : MonoBehaviour
         _boxes.Remove(_boxToRemove);
     }
 
+    public void ResetBoxes()
+    {
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            if (!transform.GetChild(i).GetComponent<BoxCollider2D>().enabled)
+            {
+                transform.GetChild(i).GetComponent<BoxCollider2D>().enabled = true;
+                transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
+                _boxes.Add(transform.GetChild(i).GetComponent<Box>());
+            }
+        }
+    }
+
     private void OnValidate()
     {
         _boxes = new List<Box>();

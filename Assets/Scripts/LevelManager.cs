@@ -8,10 +8,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] List<BoxManager.BoxType> ingredientList;
     [SerializeField] private int minIngredientsAsked = 0;
     [SerializeField] private float maxTime = 0;
-    [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject _panel;
     [SerializeField] private List<GameObject> stars;
     [SerializeField] private Text ingredientText;
     [SerializeField] private Text timeText;
+    [SerializeField] private PlayerManager _playerManager;
+
     private int currentIngredientsPicked = 0;
 
     public BoxManager.BoxType nextIngredient;
@@ -19,22 +21,19 @@ public class LevelManager : MonoBehaviour
     private bool ingredientsAskedCompleted = false;
     private bool specialPicked = false;
     private bool scaped = false;
-    private bool levelEnded = false;
-    private float timer = 0;
-    // Start is called before the first frame update
+    public float timer = 0;
+
     void Start()
     {
-        Time.timeScale= 1;
+        Time.timeScale = 0;
 
         NewIngredientAsked();
 
         timer = maxTime;
 
         StartCoroutine(LevelTimer());
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateTimeText();
@@ -82,7 +81,7 @@ public class LevelManager : MonoBehaviour
     public void LevelEnded()
     {
         Time.timeScale = 0;
-        canvas.SetActive(true);
+        _panel.SetActive(true);
         if (scaped) stars[0].SetActive(true);
         if (ingredientsAskedCompleted) stars[1].SetActive(true);
         if (specialPicked) stars[2].SetActive(true);
@@ -96,11 +95,27 @@ public class LevelManager : MonoBehaviour
         timeText.text = "Time Left: "+ (int)timer;
     }
 
-    IEnumerator LevelTimer()
+    public IEnumerator LevelTimer()
     {
         yield return new WaitForSeconds(maxTime);
-        if(!levelEnded)
-            LevelEnded();
+        LevelEnded();
     }
-    
+
+    public void OnReset()
+    {
+        NewIngredientAsked();
+        timer = maxTime;
+        StartCoroutine(LevelTimer());
+
+        ingredientsAskedCompleted = false;
+        specialPicked = false;
+        scaped = false;
+        currentIngredientsPicked = 0;
+
+        foreach(GameObject star in stars)
+            star.SetActive(false);
+
+        _playerManager.OnReset();
+    }
+
 }
